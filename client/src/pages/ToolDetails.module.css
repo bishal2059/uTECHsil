@@ -35,3 +35,14 @@ margin: 1px;
 text-transform: capitalize;
 list-style: none;
 }
+
+.buy{
+    position: relative;
+    background-color: green;
+    bottom: 5%;
+    left:40%;
+    border-radius: 50px;
+    font-size: x-large;
+    padding: 10px;
+    color: whitesmoke;
+}

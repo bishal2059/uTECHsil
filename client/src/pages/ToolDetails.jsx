@@ -68,6 +68,9 @@ const ToolDetails = () => {
                         )}
                     </div>
                 </div>
+                <div>
+                    <button className={classes.buy}> Buy Now</button>
+                </div>
             </div>
         </div>
     )
