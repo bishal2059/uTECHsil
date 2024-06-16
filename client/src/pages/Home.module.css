@@ -1,0 +1,33 @@
+
+.dis{
+    font-size: medium;
+    /* background-color: red; */
+    padding: 10px;
+    color: rgb(33, 31, 33);
+    font-weight: 800;
+    text-align: justify;
+}
+
+.logo{
+    box-shadow: rgba(59, 94, 2, 0.35) 0px 5px 15px;
+height: 40%;
+border-radius: 70px;
+font-size: 50px;
+}
+
+.sub{
+font-size: larger;
+padding: 6px;
+text-align: center;
+color: gray;
+}
+
+.title{
+font-size: 50px;
+text-align: center;
+font-weight: bolder;
+/* background-color: rgb(108, 103, 98); */
+text-shadow: 2px 2px rgb(56, 51, 22);
+
+}
+
