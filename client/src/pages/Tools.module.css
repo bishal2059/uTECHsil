@@ -1,16 +1,21 @@
 .main{
 text-transform: capitalize;
-box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;}
+box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+width:auto;
+/* overflow: visible; */
+}
 
 .pic{
-padding: 4px;
+    height: 75%;
+    width: 80%;
+padding: 10px;
 text-transform: capitalize;
 border-radius: 30px;
 }
 
 .discp{
-    overflow: hidden;
+    overflow: visible;
     padding: 2px;
     text-align: centre;
-    font-weight: 600;
+    font-weight: 500;
 }
