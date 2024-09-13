@@ -16,8 +16,8 @@ const HomePage = () => {
       <h3 className={classes.dis}>
         Designed to preserve the rich traditional history of Nepal, our app,
         uTECHsil allows users to explore and discover the vibrant world of
-        Nepali traditional utensils. Simply upload a photo or video, and
-        uTECHsil will instantly identify the traditional items in the media.
+        Nepali traditional utensils. Simply upload a photo, and
+        uTECHsil will instantly identify the traditional items.
         Also, providing detailed information about the items.
       </h3>
       <Link

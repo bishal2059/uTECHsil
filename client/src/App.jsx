@@ -14,7 +14,6 @@ export default function App() {
                 <Route path="/" element={<Layout />}>
                     <Route path="" element={<HomePage />} />
                     <Route path="image" element={<ImagePage />} />
-                    <Route path="video" element={<VideoPage />} />
                     <Route path="tools" element={<Tools />} />
                     <Route path="tools/:id" element={<ToolDetails />} />
                 </Route>
