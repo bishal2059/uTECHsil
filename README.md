@@ -8,12 +8,16 @@
 To start the flask server:
 
 ```
+pip install -r requirements.txt
+
 python index.py
 ```
 
 To start the client development mode:
 
 ```
+npm install
+
 npm run dev
 ```
 

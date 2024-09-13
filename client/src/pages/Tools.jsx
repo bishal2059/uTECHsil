@@ -12,7 +12,7 @@ const Tools = () => {
                     return (
                         <div key={tools} className={classes.main}>
                                 <Link to={`/tools/${tools}`} className="w-full">
-                            <div className="rounded overflow-hidden shadow-lg">
+                            <div className="rounded shadow-lg">
                                 <img
                                     className={classes.pic}
                                     src={toolsList[tools]['image']}
@@ -28,7 +28,7 @@ const Tools = () => {
                                     </p>
                                 </div>
                             </div>
-                                    </Link>
+                                </Link>
                         </div>
                     )
                 })}

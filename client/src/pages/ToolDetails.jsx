@@ -19,7 +19,6 @@ const ToolDetails = () => {
         return (
             <div>
                 <Link className="text-sm bold text-blue-600" to={'/tools'}>
-                    {'<< Back to All Culture'}
                 </Link>
                 <h1 className="text-2xl text-center mt-20 bold">Not found</h1>{' '}
             </div>

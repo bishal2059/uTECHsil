@@ -1,21 +1,18 @@
 .main{
 text-transform: capitalize;
-display: flex;
-background-color: red;
-height: 80%;
-flex-direction: row;
+padding: 5px;
 }
 
 .pic{
-    height: 75%;
-    width: 80%;
+background-color: rgb(158, 228, 68);
+justify-content: center;
 padding: 10px;
+width: inherit;
 text-transform: capitalize;
 border-radius: 30px;
 }
 
 .discp{
-    overflow: visible;
     padding: 2px;
     text-align: centre;
     font-weight: 500;
