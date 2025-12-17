@@ -1,7 +1,6 @@
 import UploadCard from '../components/UploadCard'
-import { AiOutlineCloudUpload, AiOutlineSync } from 'react-icons/ai'
+import { HiOutlineRefresh, HiOutlineTrash, HiOutlineSparkles, HiOutlineEye } from 'react-icons/hi'
 import { useRef, useState } from 'react'
-import { GrClear } from 'react-icons/gr'
 
 import DetectionList from '../components/DetectionList'
 import InfoList from '../components/InfoList'
@@ -72,7 +71,6 @@ export default function Image() {
             })
             .catch(e => {
                 console.error(e)
-                // alert('Detection failed')
             })
             .finally(() => setPredicting(false))
     }
@@ -98,103 +96,133 @@ export default function Image() {
             })
     }
 
+    const handleClear = () => {
+        setTargetImage(null)
+        setImageFile(null)
+        setPredictedClasses(null)
+        setDetectedItems([])
+        setDetected(false)
+        setNoInfo(null)
+    }
+
     return (
-        <>
+        <div className="min-h-full p-4 md:p-6">
+            {/* Header */}
+            <div className="text-center mb-6">
+                <h1 className="text-3xl font-bold gradient-text mb-2">Image Detection</h1>
+                <p className="text-slate-400">Upload an image to identify traditional items</p>
+            </div>
+
             {targetImage === null ? (
                 <UploadCard
                     handleChange={handleChange}
-                    image="assets/imageHolder.svg"
                     accept="image/*"
+                    title="Upload Image"
+                    subtitle="Drag and drop an image of a traditional utensil"
                 />
             ) : (
-                <div className="flex flex-col h-full w-full">
-                    <div className="w-full text-center border-b border-black text-base">
-                        PHOTO RESULT
+                <div className="flex flex-col gap-6 max-w-4xl mx-auto">
+                    {/* Image Preview Section */}
+                    <div className="glass-card p-4 rounded-2xl">
+                        <div className="flex items-center justify-between mb-4">
+                            <h2 className="text-lg font-semibold text-white flex items-center gap-2">
+                                <HiOutlineEye className="text-indigo-400" />
+                                Preview
+                            </h2>
+                            <div className="flex gap-2">
+                                {!predicting ? (
+                                    <button
+                                        onClick={handleSubmit}
+                                        className="flex items-center gap-2 btn-primary text-sm py-2 px-4"
+                                    >
+                                        <HiOutlineSparkles />
+                                        Detect
+                                    </button>
+                                ) : (
+                                    <button className="flex items-center gap-2 btn-primary text-sm py-2 px-4 opacity-70 cursor-not-allowed">
+                                        <div className="spinner w-4 h-4 border-2"></div>
+                                        Processing...
+                                    </button>
+                                )}
+                                <button
+                                    onClick={handleClear}
+                                    className="flex items-center gap-2 glass-card-light px-4 py-2 rounded-xl text-slate-300 hover:text-red-400 transition-colors"
+                                >
+                                    <HiOutlineTrash />
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div className="relative rounded-xl overflow-hidden bg-slate-900/50" ref={parentRef}>
+                            <img
+                                src={targetImage}
+                                className="max-h-[50vh] mx-auto"
+                                onLoad={bounds}
+                                ref={imageRef}
+                                alt="Uploaded image"
+                            />
+                            {detected && bounding && (
+                                <>
+                                    {detectedItems.map((item, idx) => {
+                                        if (predictedClasses[item.classId]?.show)
+                                            return (
+                                                <BoundingBox
+                                                    key={idx}
+                                                    detection={item}
+                                                    onClick={setNoInfo}
+                                                    relativePos={bounding}
+                                                />
+                                            )
+                                        return null
+                                    })}
+                                </>
+                            )}
+                        </div>
                     </div>
-                    <div className="relative mt-10 h-1/2" ref={parentRef}>
-                        <img
-                            src={targetImage}
-                            className="h-full absolute inset-0 m-auto"
-                            onLoad={bounds}
-                            ref={imageRef}
-                        />
-                        {detected && (
-                            <>
-                                {detectedItems.map((item, idx) => {
-                                    if (predictedClasses[item.classId].show)
-                                        return (
-                                            <BoundingBox
-                                                key={idx}
-                                                detection={item}
-                                                onClick={setNoInfo}
-                                                relativePos={bounding}
-                                            />
-                                        )
-                                })}
-                            </>
-                        )}
-                    </div>
-                    <div className="h-1/2 flex flex-col justify-start gap-3 flex-grow p-2 max-h-[50%] overflow-hidden">
-                        <div className="flex gap-x-5 self-center shadow-md border border-black rounded-md px-2 py-1">
-                            {!predicting ? (
-                                <AiOutlineCloudUpload
-                                    size="2em"
-                                    onClick={handleSubmit}
-                                />
+
+                    {/* Detection Results */}
+                    {detected && (
+                        <div className="glass-card p-4 rounded-2xl animate-fadeInUp">
+                            {noInfo === null ? (
+                                <div className="flex flex-col gap-4">
+                                    {/* Primary Detection */}
+                                    {inferedTools?.name && (
+                                        <Link
+                                            to={`/tools/${inferedTools?.id}`}
+                                            className="glass-card-light p-4 rounded-xl flex items-center justify-between hover:bg-white/10 transition-all group"
+                                        >
+                                            <div>
+                                                <span className="text-slate-400 text-sm">Primary Detection</span>
+                                                <h3 className="text-xl font-semibold text-white capitalize">
+                                                    {inferedTools?.name}
+                                                </h3>
+                                            </div>
+                                            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center group-hover:scale-110 transition-transform">
+                                                <HiOutlineSparkles className="text-white" />
+                                            </div>
+                                        </Link>
+                                    )}
+                                    
+                                    {/* All Detections */}
+                                    <div>
+                                        <h4 className="text-sm text-slate-400 mb-3">All Detected Items</h4>
+                                        <DetectionList
+                                            items={Object.values(predictedClasses || {})}
+                                            onInfo={setNoInfo}
+                                            handleClick={hideClass}
+                                        />
+                                    </div>
+                                </div>
                             ) : (
-                                <AiOutlineSync
-                                    size="2em"
-                                    className="animate-spin"
+                                <InfoList
+                                    classId={noInfo}
+                                    handleBack={() => setNoInfo(null)}
                                 />
                             )}
-                            <GrClear
-                                size="2em"
-                                onClick={() => {
-                                    setTargetImage(null)
-                                    setPredictedClasses(null)
-                                    setDetectedItems([])
-                                    setDetected(false)
-                                }}
-                            />
                         </div>
-                        {detected && (
-                            <div className="flex flex-col overflow-hidden">
-                                <div
-                                    className={`border border-black shadow-2xl flex flex-col gap-y-2 rounded-md transition duration-300 no-scrollbar p-2 overflow-hidden max-h-full ${noInfo != null ? 'pt-0' : ''
-                                        }`}
-                                >
-                                    {noInfo === null ? (
-                                        <>
-                                            <span className="border shadow-md px-3 py-2 w-fit rounded-lg self-center">
-                                                {detected ? <Link
-                                                    to={`/tools/${inferedTools?.id}`}
-                                                >
-                                                    Gussed Tools:{' '}
-                                                    {inferedTools?.name ||
-                                                        "Couldn't Detect"}
-                                                </Link> : null }
-                                            </span>
-                                            <hr className="border-0 h-[4px] bg-slate-200 w-1/2 self-center" />
-                                            <DetectionList
-                                                items={Object.values(
-                                                    predictedClasses
-                                                )}
-                                                onInfo={setNoInfo}
-                                                handleClick={hideClass}
-                                            />
-                                        </>
-                                    ) : (
-                                        <InfoList
-                                            classId={noInfo}
-                                            handleBack={() => setNoInfo(null)}
-                                        />
-                                    )}
-                                </div>
-                            </div>
-                        )}
-                    </div>
+                    )}
                 </div>
             )}
-        </>
+        </div>
     )
 }

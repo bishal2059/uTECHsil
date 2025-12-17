@@ -1,39 +1,51 @@
-import { MdOutlineVisibilityOff, MdOutlineVisibility } from 'react-icons/md'
+import { HiOutlineEye, HiOutlineEyeOff, HiOutlineInformationCircle } from 'react-icons/hi'
 
 export default function DetectionList({ items, handleClick, onInfo }) {
-    if (!items || items?.length == 0)
-        return <div className="w-full text-center">Nothing detected</div>
+    if (!items || items?.length === 0)
+        return (
+            <div className="w-full text-center py-8 text-slate-400">
+                <p>No items detected</p>
+            </div>
+        )
 
     return (
-        <ul className="flex flex-wrap overflow-scroll gap-3 pt-3">
+        <div className="flex flex-wrap gap-3">
             {items?.map((item, index) => (
                 <div
                     key={index}
-                    className={`flex flex-row gap-2 items-center border border-b-2 w-fit px-3 py-1 rounded-t-md ${item.show ? 'border-b-green-500' : 'border-b-red-500'
-                        }`}
+                    className={`glass-card-light flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 hover:bg-white/10 ${
+                        item.show ? 'border-l-4 border-l-green-500' : 'border-l-4 border-l-red-500 opacity-60'
+                    }`}
                 >
-                    <li
+                    <div
                         onClick={() => onInfo(item.classId)}
-                        className="cursor-pointer"
+                        className="cursor-pointer flex items-center gap-2 group"
                     >
-                        <span className="text-sm font-bold">
+                        <span className="w-7 h-7 rounded-lg bg-indigo-500/20 flex items-center justify-center text-xs font-bold text-indigo-400">
                             {item.classId}
                         </span>
-                        : <span>{item.name}</span>
-                    </li>
-                    {item.show ? (
-                        <MdOutlineVisibility
-                            onClick={() => handleClick(item.classId)}
-                            className="cursor-pointer"
-                        />
-                    ) : (
-                        <MdOutlineVisibilityOff
-                            onClick={() => handleClick(item.classId)}
-                            className="cursor-pointer"
-                        />
-                    )}
+                        <span className="text-white font-medium capitalize group-hover:text-indigo-400 transition-colors">
+                            {item.name}
+                        </span>
+                        <HiOutlineInformationCircle className="text-slate-500 group-hover:text-indigo-400 transition-colors" />
+                    </div>
+                    
+                    <button
+                        onClick={() => handleClick(item.classId)}
+                        className={`p-2 rounded-lg transition-all ${
+                            item.show 
+                                ? 'text-green-400 hover:bg-green-500/20' 
+                                : 'text-red-400 hover:bg-red-500/20'
+                        }`}
+                    >
+                        {item.show ? (
+                            <HiOutlineEye className="text-lg" />
+                        ) : (
+                            <HiOutlineEyeOff className="text-lg" />
+                        )}
+                    </button>
                 </div>
             ))}
-        </ul>
+        </div>
     )
 }
